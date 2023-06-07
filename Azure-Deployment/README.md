@@ -117,3 +117,8 @@ kubectl version
 ```shell
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=10.230.0.10
 ```
+
+## Troubleshooting
+```shell
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
