@@ -111,15 +111,16 @@ az vm availability-set create -g $rg -n $workeravblset --unmanaged
 # Provision worker VMs
 # Use Loop for >1 nic and VMs - no Public IP
 for i in 0; do 
-	# echo "----------------- 11a. Creating Worker VM's Public IP($i) -----------------"
-	az network public-ip create -n worker-${i}-publicip -g $rg 
+	echo "----------------- 11a. Creating Worker VM's Public IP($i) -----------------"
+	# az network public-ip create -n worker-${i}-publicip -g $rg 
+        echo "Using Private IP to connect and configure through Controller"
 
 	echo "----------------- 11b. Creating Worker VM's NIC($i) -----------------"
-	az network nic create -g $rg -n worker-${i}-nic --private-ip-address $workerprivateippref${i} \
-			--public-ip-address worker-${i}-publicip --vnet $vnet --subnet $subnet --ip-forwarding
-
 	# az network nic create -g $rg -n worker-${i}-nic --private-ip-address $workerprivateippref${i} \
-	#		--vnet $vnet --subnet $subnet --ip-forwarding
+	#		--public-ip-address worker-${i}-publicip --vnet $vnet --subnet $subnet --ip-forwarding
+
+	az network nic create -g $rg -n worker-${i}-nic --private-ip-address $workerprivateippref${i} \
+			--vnet $vnet --subnet $subnet --ip-forwarding
 
 	echo "----------------- 11c. Creating Worker VM($i) -----------------"
 	az vm create -g $rg -n worker-${i} --image $vmimage --availability-set  $workeravblset \
