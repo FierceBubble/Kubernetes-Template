@@ -68,7 +68,9 @@ az network nsg rule create -g $rg -n k8s-allow-ssh --access allow --destination-
 
 az network nsg rule create -g $rg -n k8s-allow-api-server --access allow --destination-address-prefixes '*' --destination-port-range 6443 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1001
 
-az network nsg rule create -g $rg -n k8s-allow-kubelet-check --access allow --destination-address-prefixes '*' --destination-port-range 10248 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1002
+az network nsg rule create -g $rg -n k8s-allow-kubectl-commands --access allow --destination-address-prefixes '*' --destination-port-range 8080 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1002
+
+az network nsg rule create -g $rg -n k8s-allow-kubelet-check --access allow --destination-address-prefixes '*' --destination-port-range 10248 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1003
 
 echo "----------------- 5 Creating Subnet -----------------"
 # Create Subnet
