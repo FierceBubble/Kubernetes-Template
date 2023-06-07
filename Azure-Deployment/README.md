@@ -125,3 +125,6 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address
 ```shell
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
+```shell
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+```
