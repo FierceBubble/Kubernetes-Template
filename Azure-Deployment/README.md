@@ -1,27 +1,27 @@
 # Setting up Kubernetes Clusters using Microsoft Azure VMs
-```
+```shell
 sudo swapoff -a
 ```
-```
+```shell
 cat /proc/meminfo | grep 'SwapTotal'
 ```
-```
+```shell
 sudo apt remove docker docker.io containerd runc
 ```
-```
+```shell
 sudo modprobe overlay
 ```
-```
+```shell
 sudo modprobe br_netfilter
 ```
-```
+```shell
 cat <<EOF | sudo tee /etc/modules-load.d/kubernetes.conf
 overlay
 br_netfilter
 EOF
 ```
 ## DOCKER-CRI Runtime Install (Uncomment to use)
-```
+```shell
 # sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg curl lsb-release
 # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 # sudo apt-key fingerprint 0EBFCD88
@@ -52,67 +52,68 @@ EOF
 ## Containerd Runtime Install
 #### Containerd Release list https://github.com/containerd/containerd/releases
 ##### Below using v1.7.2
-```
+```shell
 wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
 ```
-```
+```shell
 tar Cxzvf /usr/local containerd-1.7.2-linux-amd64.tar.gz
 ```
-```
+```shell
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service -O /lib/systemd/system/containerd.service
 ```
-```
+```shell
 systemctl daemon-reload
 ```
-```
+```shell
 systemctl enable --now containerd
 ```
 
 #### RunC Release List https://github.com/opencontainers/runc/releases
 ##### Below using v1.1.7
-```
+```shell
 wget https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64 
 ```
-```
+```shell
 install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
 #### CNI Plugin Release List https://github.com/containernetworking/plugins/releases
 ##### Below using v1.3.0
-```
+```shell
 wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz 
 ```
-```
+```shell
 mkdir -p /opt/cni/bin
 ```
-```
+```shell
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 ```
 
 ## Install Kubectl, Kubeadm, and Kubelet
-```curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg  | sudo apt-key add -
+```shell
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg  | sudo apt-key add -
 ```
-```
+```shell
 sudo bash -c "cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF"
 ```
-```
+```shell
 sudo apt-get update
 ```
-```
+```shell
 sudo apt-get install -y kubelet kubeadm kubectl
 ```
-```
+```shell
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
-```
+```shell
 kubeadm version
 kubelet --version
 kubectl version
 ```
 
 ## Kubernetes Cluster Initialization
-```
+```shell
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=10.230.0.10
 ```
