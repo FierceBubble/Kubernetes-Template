@@ -1,5 +1,8 @@
 # Setting up Kubernetes Clusters using Microsoft Azure VMs
 ```shell
+sudo apt update && sudo apt upgrade -y
+```
+```shell
 sudo swapoff -a
 ```
 ```shell
@@ -20,7 +23,7 @@ overlay
 br_netfilter
 EOF
 ```
-## DOCKER-CRI Runtime Install (Uncomment to use)
+### DOCKER-CRI Runtime Install (Uncomment to use)
 ```shell
 # sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg curl lsb-release
 # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -49,7 +52,7 @@ EOF
 # sudo docker info | grep -i cgroup
 ```
 
-## Containerd Runtime Install
+### Containerd Runtime Install
 #### Containerd Release list https://github.com/containerd/containerd/releases
 ##### Below using v1.7.2
 ```shell
@@ -89,7 +92,7 @@ mkdir -p /opt/cni/bin
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 ```
 
-## Install Kubectl, Kubeadm, and Kubelet
+### Install Kubectl, Kubeadm, and Kubelet
 ```shell
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg  | sudo apt-key add -
 ```
@@ -113,12 +116,15 @@ kubelet --version
 kubectl version
 ```
 
-## Kubernetes Cluster Initialization
+### Kubernetes Cluster Initialization
 ```shell
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=10.230.0.10
 ```
 
-## Troubleshooting
+### Troubleshooting
 ```shell
 echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+```shell
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 ```
