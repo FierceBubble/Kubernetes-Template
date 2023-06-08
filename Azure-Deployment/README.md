@@ -23,10 +23,7 @@ overlay
 br_netfilter
 EOF
 ```
-###### All-in-one
-```bash
-sudo apt update && sudo apt upgrade -y && sudo swapoff -a && cat /proc/meminfo | grep 'SwapTotal' && sudo apt remove docker docker.io containerd runc && sudo modprobe overlay && sudo modprobe br_netfilter
-```
+
 ### DOCKER-CRI Runtime Install (Uncomment to use)
 ```shell
 # sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg curl lsb-release
@@ -74,10 +71,6 @@ systemctl daemon-reload
 ```shell
 systemctl enable --now containerd
 ```
-###### All-in-one
-```bash
-wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz && sudo tar Cxzvf /usr/local containerd-1.7.2-linux-amd64.tar.gz && sudo wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service -O /lib/systemd/system/containerd.service && systemctl daemon-reload && systemctl enable --now containerd
-```
 
 #### RunC Release List https://github.com/opencontainers/runc/releases
 ##### Below using v1.1.7
@@ -86,10 +79,6 @@ wget https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64
 ```
 ```shell
 install -m 755 runc.amd64 /usr/local/sbin/runc
-```
-###### All-in-one
-```bash
-wget https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64 && sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
 #### CNI Plugin Release List https://github.com/containernetworking/plugins/releases
@@ -102,10 +91,6 @@ mkdir -p /opt/cni/bin
 ```
 ```shell
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
-```
-###### All-in-one
-```bash
-wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz && sudo mkdir -p /opt/cni/bin && sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 ```
 
 ### Install Kubectl, Kubeadm, and Kubelet
@@ -130,13 +115,6 @@ sudo apt-mark hold kubelet kubeadm kubectl
 kubeadm version
 kubelet --version
 kubectl version
-```
-```bash
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg  | sudo apt-key add - && \
-sudo bash -c "cat <<EOF >/etc/apt/sources.list.d/kubernetes.list 
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF" && \
-sudo apt-get update && sudo apt-get install -y kubelet kubeadm kubectl && sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 ### Kubernetes Cluster Initialization
