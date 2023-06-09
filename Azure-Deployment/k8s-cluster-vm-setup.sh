@@ -75,6 +75,7 @@ az network nsg rule create -g $rg -n k8s-allow-kubelet-check --access allow --de
 az network nsg rule create -g $rg -n k8s-allow-http --access allow --destination-address-prefixes '*' --destination-port-range 80 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1004
 
 az network nsg rule create -g $rg -n k8s-allow-https --access allow --destination-address-prefixes '*' --destination-port-range 443 --direction inbound --nsg-name $nsg --protocol tcp --source-address-prefixes '*' --source-port-range '*' --priority 1005
+
 echo "----------------- 5 Creating Subnet -----------------"
 # Create Subnet
 az network vnet subnet create -g $rg --vnet-name $vnet -n $subnet --address-prefixes $subnetaddressprefix --network-security-group $nsg

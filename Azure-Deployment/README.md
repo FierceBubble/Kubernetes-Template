@@ -122,6 +122,42 @@ kubectl version
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=10.230.0.10
 ```
 
+### Kata Container Deployment to Kubernetes Cluster
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-rbac/base/kata-rbac.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-deploy/base/kata-deploy-stable.yaml
+```
+
+```bash
+$ kubectl -n kube-system wait --timeout=10m --for=condition=Ready -l name=kata-deploy pod
+```
+
+```bash
+  $ kubectl apply -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/runtimeclasses/kata-runtimeClasses.yaml
+```
+
+### Remove Kata from the Kubernetes cluster
+```bash
+$ kubectl delete -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-deploy/base/kata-deploy-stable.yaml
+$ kubectl -n kube-system wait --timeout=10m --for=delete -l name=kata-deploy pod
+```
+
+After ensuring kata-deploy has been deleted, cleanup the cluster:
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-cleanup/base/kata-cleanup-stable.yaml
+```
+
+The cleanup daemon-set will run a single time, cleaning up the node-label, which makes it difficult to check in an automated fashion.
+This process should take, at most, 5 minutes.
+
+After that, let's delete the cleanup daemon-set, the added RBAC and runtime classes:
+```bash
+$ kubectl delete -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-cleanup/base/kata-cleanup-stable.yaml
+$ kubectl delete -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-rbac/base/kata-rbac.yaml
+$ kubectl delete -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/runtimeclasses/kata-runtimeClasses.yaml
+```
+
+
 ### Troubleshooting
 ```shell
 echo 1 > /proc/sys/net/ipv4/ip_forward
