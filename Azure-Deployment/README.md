@@ -136,6 +136,39 @@ kubectl -n kube-system wait --timeout=10m --for=condition=Ready -l name=kata-dep
 kubectl apply -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/runtimeclasses/kata-runtimeClasses.yaml
 ```
 
+```toml
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata]
+          runtime_type = "io.containerd.kata.v2"
+          privileged_without_host_devices = true
+          pod_annotations = ["io.katacontainers.*"]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata.options]
+            ConfigPath = "/opt/kata/share/defaults/kata-containers/configuration.toml"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-fc]
+          runtime_type = "io.containerd.kata-fc.v2"
+          privileged_without_host_devices = true
+          pod_annotations = ["io.katacontainers.*"]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-fc.options]
+            ConfigPath = "/opt/kata/share/defaults/kata-containers/configuration-fc.toml"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-qemu]
+          runtime_type = "io.containerd.kata-qemu.v2"
+          privileged_without_host_devices = true
+          pod_annotations = ["io.katacontainers.*"]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-qemu.options]
+            ConfigPath = "/opt/kata/share/defaults/kata-containers/configuration-qemu.toml"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-clh]
+          runtime_type = "io.containerd.kata-clh.v2"
+          privileged_without_host_devices = true
+          pod_annotations = ["io.katacontainers.*"]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-clh.options]
+            ConfigPath = "/opt/kata/share/defaults/kata-containers/configuration-clh.toml"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-dragonball]
+          runtime_type = "io.containerd.kata-dragonball.v2"
+          privileged_without_host_devices = true
+          pod_annotations = ["io.katacontainers.*"]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-dragonball.options]
+            ConfigPath = "/opt/kata/share/defaults/kata-containers/configuration-dragonball.toml"
+```
+
 ### Remove Kata from the Kubernetes cluster
 ```bash
 kubectl delete -f https://raw.githubusercontent.com/kata-containers/kata-containers/main/tools/packaging/kata-deploy/kata-deploy/base/kata-deploy-stable.yaml
