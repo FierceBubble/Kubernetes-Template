@@ -65,6 +65,9 @@ tar Cxzvf /usr/local containerd-1.7.2-linux-amd64.tar.gz
 ```shell
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service -O /lib/systemd/system/containerd.service
 ```
+```bash
+sudo containerd config default | sudo tee /etc/containerd/config.toml
+```
 ```shell
 systemctl daemon-reload
 ```
