@@ -82,11 +82,6 @@ systemctl daemon-reload
 ```
 ```shell
 systemctl enable --now containerd
-```
-##### ----- Or Skip and use apt package manager -----
-```bash
-sudo apt install containerd
-```
 
 #### RunC Release List https://github.com/opencontainers/runc/releases
 ##### Below using v1.1.7
