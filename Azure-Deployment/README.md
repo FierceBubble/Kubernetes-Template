@@ -64,12 +64,12 @@ EOF
 
 ### Containerd Runtime Install
 #### Containerd Release list https://github.com/containerd/containerd/releases
-##### Below using v1.7.2
+##### Below using v1.6.8
 ```shell
-wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
+wget https://github.com/containerd/containerd/releases/download/v1.6.8/containerd-1.6.8-linux-amd64.tar.gz
 ```
 ```shell
-tar Cxzvf /usr/local containerd-1.7.2-linux-amd64.tar.gz
+tar Cxzvf /usr/local containerd-1.6.8-linux-amd64.tar.gz
 ```
 ```shell
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service -O /lib/systemd/system/containerd.service
@@ -206,7 +206,7 @@ This way of installation of Kata Container is more stable and gives the user mor
 
 #### Wget Kata Container Binary packages from the official release page
 ```bash
-VERSION=3.1.2 # or any other version you desired
+VERSION=3.1.1 # v3.1.1 is tested!
 wget https://github.com/kata-containers/kata-containers/releases/download/${VERSION}/kata-static-${VERSION}-x86_64.tar.xz
 ```
 #### Extract Kata Container Binary packages
