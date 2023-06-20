@@ -354,7 +354,20 @@ sudo dmsetup create "${POOL_NAME}" \
     --table "0 ${LENGTH_IN_SECTORS} thin-pool ${META_DEV} ${DATA_DEV} ${DATA_BLOCK_SIZE} ${LOW_WATER_MARK}"
 ```
 
-#### To allow `Containerd` to use devmapper, we should add some configuration in our `/etc/containerd/config.toml`
+#### Configuring `Containerd`
+We should create a script that will tell `containerd` to use `firecracker` configuration instead of the conventional `qemu`. We can create `/usr/local/bin/containerd-shim-kata-fc-v2`
+###### In the script
+```sh
+#!/bin/bash
+KATA_CONF_FILE=/opt/kata/share/defaults/kata-containers/configuration-qemu.toml /opt/kata/bin/containerd-shim-kata-v2 $@
+```
+
+Make it executable
+```bash
+sudo chmod +x /usr/local/bin/conatinerd-shim-kata-fc-v2
+```
+
+Now we can add both the created script for shim kata runtime and devmapper into our `/etc/containerd/config.toml`
 ```toml
 [plugins]
   [plugins."io.containerd.grpc.v1.cri"]
