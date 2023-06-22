@@ -49,6 +49,15 @@ apt-get update
 ```bash
 apt-get install cri-o cri-o-runc cri-tools
 ```
+```bash
+systemctl enable crio
+```
+```bash
+systemctl start crio
+```
+```bash
+systemctl status crio
+```
 Edit `/etc/crio/crio.conf`
 ```conf
 conmon= "/usr/bin/conmon"
