@@ -161,6 +161,10 @@ Only then you can initialize the connection to the worker node(s)
 ```bash
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 ```
+We can also use Flannel as our CNI Plugin
+```bash
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+```
 
 ## Kata Container - Installing Kata Runtime
 There are several ways to install kata cotainer into a machine. In our case we can do it with 2 ways:
