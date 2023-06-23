@@ -369,7 +369,7 @@ KATA_CONF_FILE=/opt/kata/share/defaults/kata-containers/configuration-qemu.toml 
 
 Make it executable
 ```bash
-sudo chmod +x /usr/local/bin/conatinerd-shim-kata-fc-v2
+sudo chmod +x /usr/local/bin/containerd-shim-kata-fc-v2
 ```
 
 Now we can add both the created script for shim kata runtime and devmapper into our `/etc/containerd/config.toml`
